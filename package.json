@@ -1,0 +1,22 @@
+{
+  "name": "data-manager",
+  "version": "1.0.0",
+  "description": "Manager the export and import data in dojot.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dojot/data-manager.git"
+  },
+  "keywords": [
+    "dojot"
+  ],
+  "author": "Elias Reis <efreis@cpqd.com.br>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dojot/data-manager/issues"
+  },
+  "homepage": "https://github.com/dojot/data-manager#readme"
+}

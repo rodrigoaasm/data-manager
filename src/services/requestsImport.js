@@ -75,6 +75,7 @@ const postImport = data => new Promise(async (resolve, reject) => {
   try {
     await deleteAllData();
   } catch (error) {
+    console.log(error);
     reject(error.toString());
   }
   const body = data;

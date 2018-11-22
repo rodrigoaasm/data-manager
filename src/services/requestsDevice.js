@@ -2,9 +2,10 @@ import config from '../config';
 
 import Requests from '../utils/requests';
 
-const requestDevice = () => new Promise((resolve, reject) => {
-  Requests.makeRequest(`${config.device_manager_url}/device`)
+const get = () => new Promise((resolve, reject) => {
+  Requests.get(`${config.device_manager_url}/device`)
     .then((obj) => {
+      console.log(obj);
       resolve(obj);
     })
     .catch((err) => {
@@ -12,11 +13,11 @@ const requestDevice = () => new Promise((resolve, reject) => {
     });
 });
 
-const postDevice = body => new Promise((resolve, reject) => {
+const post = body => new Promise((resolve, reject) => {
   const calls = [];
   body.forEach((obj) => {
     const element = obj;
-    calls.push(Requests.makePost(`${config.device_manager_url}/device`, element));
+    calls.push(Requests.post(`${config.device_manager_url}/device`, element));
   });
 
   Promise.all(calls)
@@ -37,4 +38,4 @@ const postDevice = body => new Promise((resolve, reject) => {
     });
 });
 
-export default { requestDevice, postDevice };
+export default { get, post };

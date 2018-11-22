@@ -3,8 +3,6 @@ import requestDevice from './requestsDevice';
 import requestFlow from './requestsFlow';
 import requestTemplate from './requestsTemplate';
 
-// import requestUser from './requestUsers';
-
 function clearTemplateRet(template) {
   template.forEach((obj) => {
     const item = obj;
@@ -36,9 +34,9 @@ function clearDeviceRet(devices) {
 const requestExport = () => new Promise((resolve, reject) => {
   logger.debug('Will export data');
   const requests = [
-    requestDevice.requestDevice(),
-    requestTemplate.requestTemplate(),
-    requestFlow.requestFlows(),
+    requestDevice.get(),
+    requestTemplate.get(),
+    requestFlow.get(),
   ];
   Promise.all(requests)
     .then((ret) => {

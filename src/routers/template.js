@@ -7,6 +7,9 @@ router.get('/template', (req, res) => {
   requests.getTemplate()
     .then((templates) => {
       res.json(templates);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
     });
 });
 

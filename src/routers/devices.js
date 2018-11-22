@@ -1,17 +1,20 @@
 import { Router } from 'express';
-import requests from '../services/requestsDevice';
+import requestDevice from '../services/requestsDevice';
 
 const router = Router();
 
 router.get('/device', (req, res) => {
-  requests.requestDevice()
+  requestDevice.get()
     .then((devices) => {
       res.json(devices);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
     });
 });
 
 router.post('/device', (req, res) => {
-  requests.postDevice(req.body)
+  requestDevice.post(req.body)
     .then((ret) => {
       res.json(ret);
     })

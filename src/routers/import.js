@@ -36,12 +36,15 @@ router.post('/import', [
     return res.status(400).json(errors.array());
   }
 
-  return requestImport.postImport(req.body)
+  return requestImport.post(req.body)
     .then((ret) => {
       res.status(200).json(ret);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      const error = {
+        message: err.toString(),
+      };
+      res.status(400).json(error);
     });
 });
 

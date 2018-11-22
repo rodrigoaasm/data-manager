@@ -4,16 +4,22 @@ import requestFlow from '../services/requestsFlow';
 const router = Router();
 
 router.get('/flow', (req, res) => {
-  requestFlow()
+  requestFlow.get()
     .then((flows) => {
       res.json(flows);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
     });
 });
 
 router.post('/flow', (req, res) => {
-  requestFlow.postFlow(req.body)
+  requestFlow.post(req.body)
     .then((flows) => {
       res.status(200).json(flows.data);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
     });
 });
 

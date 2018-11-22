@@ -7,6 +7,12 @@ router.get('/export', (req, res) => {
   requestExport()
     .then((exportData) => {
       res.json(exportData);
+    })
+    .catch((err) => {
+      const error = {
+        message: err.toString(),
+      };
+      res.status(400).json(error);
     });
 });
 

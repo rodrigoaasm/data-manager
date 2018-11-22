@@ -2,8 +2,8 @@ import config from '../config';
 
 import Requests from '../utils/requests';
 
-const requestTemplate = () => new Promise((resolve, reject) => {
-  Requests.makeRequest(`${config.device_manager_url}/template`)
+const get = () => new Promise((resolve, reject) => {
+  Requests.get(`${config.device_manager_url}/template`)
     .then((obj) => {
       resolve(obj);
     })
@@ -12,11 +12,11 @@ const requestTemplate = () => new Promise((resolve, reject) => {
     });
 });
 
-const postTemplate = body => new Promise((resolve, reject) => {
+const post = body => new Promise((resolve, reject) => {
   const calls = [];
   body.forEach((obj) => {
     const element = obj;
-    calls.push(Requests.makePost(`${config.device_manager_url}/template`, element));
+    calls.push(Requests.post(`${config.device_manager_url}/template`, element));
   });
 
   Promise.all(calls)
@@ -37,4 +37,4 @@ const postTemplate = body => new Promise((resolve, reject) => {
     });
 });
 
-export default { requestTemplate, postTemplate };
+export default { get, post };

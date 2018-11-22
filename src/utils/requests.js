@@ -2,7 +2,7 @@ import axios from 'axios';
 import { logger } from '@dojot/dojot-module-logger';
 import generateToken from './generateToken';
 
-const makeRequest = urlRequest => new Promise((resolve, reject) => {
+const get = urlRequest => new Promise((resolve, reject) => {
   logger.debug(`Will call ${urlRequest}`);
   const token = generateToken();
   const options = {
@@ -20,7 +20,7 @@ const makeRequest = urlRequest => new Promise((resolve, reject) => {
     });
 });
 
-const makePost = (urlRequest, body) => new Promise((resolve, reject) => {
+const post = (urlRequest, body) => new Promise((resolve, reject) => {
   logger.debug(`Will call ${urlRequest}`);
   const token = generateToken();
   axios({
@@ -40,8 +40,8 @@ const makePost = (urlRequest, body) => new Promise((resolve, reject) => {
     });
 });
 
-const makeDelete = urlRequest => new Promise((resolve, reject) => {
-  logger.debug(`Will call ${urlRequest}`);
+const _delete = urlRequest => new Promise((resolve, reject) => {
+  logger.debug(`Will call delete ${urlRequest}`);
   const token = generateToken();
   axios({
     method: 'delete',
@@ -59,4 +59,4 @@ const makeDelete = urlRequest => new Promise((resolve, reject) => {
     });
 });
 
-export default { makeRequest, makePost, makeDelete };
+export default { get, post, _delete };

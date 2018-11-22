@@ -2,8 +2,8 @@ import config from '../config';
 
 import Requests from '../utils/requests';
 
-const requestFlows = () => new Promise((resolve, reject) => {
-  Requests.makeRequest(`${config.flow_broker_url}/v1/flow`)
+const get = () => new Promise((resolve, reject) => {
+  Requests.get(`${config.flow_broker_url}/v1/flow`)
     .then((obj) => {
       resolve(obj);
     })
@@ -13,11 +13,11 @@ const requestFlows = () => new Promise((resolve, reject) => {
 });
 
 
-const postFlow = body => new Promise((resolve, reject) => {
+const post = body => new Promise((resolve, reject) => {
   const calls = [];
   body.forEach((obj) => {
     const element = obj;
-    calls.push(Requests.makePost(`${config.flow_broker_url}/v1/flow`, element));
+    calls.push(Requests.post(`${config.flow_broker_url}/v1/flow`, element));
   });
 
   Promise.all(calls)
@@ -34,4 +34,4 @@ const postFlow = body => new Promise((resolve, reject) => {
 });
 
 
-export default { requestFlows, postFlow };
+export default { get, post };

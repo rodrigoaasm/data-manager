@@ -3,13 +3,31 @@ import config from '../config';
 import Requests from '../utils/requests';
 
 const get = () => new Promise((resolve, reject) => {
-  Requests.get(`${config.device_manager_url}/template`)
-    .then((obj) => {
-      resolve(obj);
-    })
-    .catch((err) => {
-      reject(err);
+  const dataReturn = {
+    templates: [],
+  };
+  const fill = (data) => {
+    data.templates.forEach((item) => {
+      dataReturn.templates.push(item);
     });
+  };
+
+  const request = (url) => {
+    Requests.get(url)
+      .then((obj) => {
+        fill(obj);
+        if (obj.pagination.has_next) {
+          request(`${config.device_manager_url}/template?page_num=${obj.pagination.next_page}`);
+        } else {
+          resolve(dataReturn);
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  };
+
+  request(`${config.device_manager_url}/template`);
 });
 
 const post = body => new Promise((resolve, reject) => {

@@ -1,0 +1,14 @@
+
+language: node_js
+node_js:
+  - "8"
+cache:
+  directories:
+  - node_modules
+
+install:
+  - npm install aglio
+script:
+  - export FLOW_BROKER_URL=http://127.0.0.1:3030
+  - export DEVICE_MANAGER_URL=http://127.0.0.1:3030
+  - bash start-test.sh

@@ -2,6 +2,12 @@
 
 node src/tests/api &
 
-dredd --level=debug
+sleep 5 &
+
+npm start &
+
+sleep 5 &
+
+dredd
 
 exit

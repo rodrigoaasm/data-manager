@@ -13,6 +13,10 @@ app.post('/device', (req, res) => {
   res.sendStatus(200);
 });
 
+app.delete('/device', (req, res) => {
+  res.sendStatus(200);
+});
+
 app.get('/template', (req, res) => {
   res.json(template);
 });
@@ -21,11 +25,19 @@ app.post('/template', (req, res) => {
   res.sendStatus(200);
 });
 
-app.get('/template', (req, res) => {
+app.delete('/template', (req, res) => {
+  res.sendStatus(200);
+});
+
+app.get('/v1/flow', (req, res) => {
   res.json(flow);
 });
 
-app.post('/template', (req, res) => {
+app.post('/v1/flow', (req, res) => {
+  res.sendStatus(200);
+});
+
+app.delete('/v1/flow', (req, res) => {
   res.sendStatus(200);
 });
 

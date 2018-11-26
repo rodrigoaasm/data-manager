@@ -32,12 +32,14 @@ function changeIdDeviceFlow(newDevices, flows) {
   const flowsList = flows;
   flowsList.forEach((flow, indexDevice) => {
     flow.flow.forEach((obj, index) => {
-      if (obj.type === 'device in') {
+      if ((obj.type === 'device in') || (obj.type === 'device out')) {
         newDevices.forEach((item) => {
           if (item.oldId === obj._device_id) {
             flowsList[indexDevice].flow[index]._device_id = item.newId;
             const device = JSON.parse(flowsList[indexDevice].flow[index].device);
             device.id = item.newId;
+            device.device_source_id = `Device (${item.newId})`;
+            console.log(device);
             flowsList[indexDevice].flow[index].device = JSON.stringify(device);
           }
         });

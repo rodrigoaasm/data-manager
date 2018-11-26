@@ -3,3 +3,5 @@
 node src/tests/api &
 
 dredd --level=debug
+
+exit

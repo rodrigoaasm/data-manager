@@ -2,7 +2,7 @@ dry-run: null
 hookfiles: null
 language: nodejs
 sandbox: false
-server:
+server: npm start
 server-wait: 3
 init: false
 custom: {}
@@ -30,5 +30,5 @@ hooks-worker-term-retry: 500
 hooks-worker-handler-host: 127.0.0.1
 hooks-worker-handler-port: 61321
 config: ./dredd.yml
-blueprint: ./src/docs/api.apib
+blueprint: ./src/docs/apiary.apib
 endpoint: 'http://127.0.0.1:3000'

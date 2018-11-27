@@ -39,7 +39,6 @@ function changeIdDeviceFlow(newDevices, flows) {
             const device = JSON.parse(flowsList[indexDevice].flow[index].device);
             device.id = item.newId;
             device.device_source_id = `Device (${item.newId})`;
-            console.log(device);
             flowsList[indexDevice].flow[index].device = JSON.stringify(device);
           }
         });
@@ -104,7 +103,7 @@ const post = data => new Promise(async (resolve, reject) => {
               const bodyDevices = body.devices;
               body.devices = [];
               bodyDevices.forEach((item) => {
-                body.devices.push(item.newObject);
+                body.devices.push(item.newObject[0]);
               });
 
               body.flows = newflows;

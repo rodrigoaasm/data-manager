@@ -13,4 +13,18 @@ install:
 script:
   - export FLOW_BROKER_URL=http://127.0.0.1:3030
   - export DEVICE_MANAGER_URL=http://127.0.0.1:3030
-  - bash src/tests/start-test.sh
+  - bash start-test.sh
+
+after_success:
+  - docker run --volume $(pwd)/src/docs:/home/node/apiary:Z giovannicuriel/aglio -i /home/node/apiary/apiary.apib -o - > ./apiary_${TRAVIS_BRANCH}.html
+  - chmod +x travis/publish.sh
+  - docker build -t ${TRAVIS_REPO_SLUG} -f DockerFile .
+  - travis/publish.sh
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep-history: true
+  on:
+    branch: ${TRAVIS_BRANCH}

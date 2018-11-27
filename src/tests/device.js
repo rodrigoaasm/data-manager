@@ -23,7 +23,7 @@ const device = {
         ],
       },
       created: '2018-11-23T15:38:36.289337+00:00',
-      id: '19aa8c',
+      id: 'e98b8',
       label: 'device',
       status: 'offline',
       templates: [

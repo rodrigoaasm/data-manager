@@ -30,16 +30,14 @@ function changeIdTemplateDevice(newsIdTemplate, devices) {
 
 function changeIdDeviceFlow(newDevices, flows) {
   const flowsList = flows;
-  flowsList.forEach((flow, indexDevice) => {
-    flow.flow.forEach((obj, index) => {
-      if ((obj.type === 'device in') || (obj.type === 'device out')) {
+  flowsList.forEach((flow) => {
+    flow.flow.forEach((objIn) => {
+      const obj = objIn;
+      if ((obj.type === 'device in') || (obj.type === 'device out') || (obj.type === 'actuate')) {
         newDevices.forEach((item) => {
           if (item.oldId === obj._device_id) {
-            flowsList[indexDevice].flow[index]._device_id = item.newId;
-            const device = JSON.parse(flowsList[indexDevice].flow[index].device);
-            device.id = item.newId;
-            device.device_source_id = `Device (${item.newId})`;
-            flowsList[indexDevice].flow[index].device = JSON.stringify(device);
+            obj._device_id = item.newId;
+            obj.device_source_id = `Device (${item.newId})`;
           }
         });
       }
@@ -50,15 +48,14 @@ function changeIdDeviceFlow(newDevices, flows) {
 
 function changeIdTemplateFlow(newflows, flows) {
   const flowsList = flows;
-  flowsList.forEach((flow, indexTemplate) => {
-    flow.flow.forEach((obj, index) => {
+  flowsList.forEach((flow) => {
+    flow.flow.forEach((objIn) => {
+      const obj = objIn;
       if (obj.type === 'device template in') {
         newflows.forEach((item) => {
-          if (item.oldId === obj._device_id) {
-            flowsList[indexTemplate].flow[index].device_template_id = item.newId;
-            const template = JSON.parse(flowsList[indexTemplate].flow[index].device_template);
-            template.id = item.newId;
-            flowsList[indexTemplate].flow[index].device_template = JSON.stringify(template);
+          if (item.oldId === obj.device_template_id) {
+            obj.device_template_id = item.newId;
+            obj.device_template.id = item.newId;
           }
         });
       }

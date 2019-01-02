@@ -46,6 +46,22 @@ function changeIdDeviceFlow(newDevices, flows) {
   return flowsList;
 }
 
+function removeMetadataIDTemplate(templates) {
+  templates.forEach((template) => {
+    template.attrs.forEach((attr) => {
+      if (attr.metadata !== undefined) {
+        attr.metadata.forEach((meta) => {
+          const data = meta;
+          if (data.id !== undefined) {
+            delete data.id;
+          }
+        });
+      }
+    });
+  });
+  return templates;
+}
+
 function changeIdTemplateFlow(newflows, flows) {
   const flowsList = flows;
   flowsList.forEach((flow) => {
@@ -77,6 +93,7 @@ const post = data => new Promise(async (resolve, reject) => {
     return;
   }
   const body = data;
+  body.templates = removeMetadataIDTemplate(body.templates);
   requestsTemplate.post(body.templates)
     .then((templates) => {
       logger.debug('Templates imported.');

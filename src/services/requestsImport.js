@@ -14,13 +14,38 @@ async function deleteAllData() {
   await Requests._delete(`${config.flow_broker_url}/v1/flow`);
 }
 
-function changeIdTemplateDevice(newsIdTemplate, devices) {
+function improveDeviceToBeCreated(newsIdTemplate, devices) {
   const deviceList = devices;
   deviceList.forEach((device, indexDevice) => {
     device.templates.forEach((templateId, index) => {
       newsIdTemplate.forEach((item) => {
         if (parseInt(item.oldId, 0) === parseInt(templateId, 0)) {
           deviceList[indexDevice].templates[index] = item.newId;
+        }
+      });
+    });
+
+    device.attrs.forEach((attr) => {
+      const changeattr = attr;
+      newsIdTemplate.forEach((item) => {
+        if (parseInt(attr.template_id, 0) === parseInt(item.oldId, 0)) {
+          changeattr.template_id = item.newId.toString();
+        }
+
+        item.newObject.attrs.forEach((attrTemplate) => {
+          if (attrTemplate.label === changeattr.label) {
+            delete changeattr.created;
+            changeattr.id = attrTemplate.id;
+          }
+        });
+
+        if (attr.metadata !== undefined) {
+          attr.metadata.forEach((meta) => {
+            const data = meta;
+            if (data.id !== undefined) {
+              delete data.id;
+            }
+          });
         }
       });
     });
@@ -47,10 +72,13 @@ function changeIdDeviceFlow(newDevices, flows) {
 }
 
 function removeMetadataIDTemplate(templates) {
-  templates.forEach((template) => {
+  const temp = templates;
+  temp.forEach((template) => {
     template.attrs.forEach((attr) => {
-      if (attr.metadata !== undefined) {
-        attr.metadata.forEach((meta) => {
+      const oneAttr = attr;
+      delete oneAttr.id;
+      if (oneAttr.metadata !== undefined) {
+        oneAttr.metadata.forEach((meta) => {
           const data = meta;
           if (data.id !== undefined) {
             delete data.id;
@@ -98,7 +126,7 @@ const post = data => new Promise(async (resolve, reject) => {
     .then((templates) => {
       logger.debug('Templates imported.');
       body.templates = templates;
-      body.devices = changeIdTemplateDevice(templates, body.devices);
+      body.devices = improveDeviceToBeCreated(templates, body.devices);
       requestsDevice.post(body.devices)
         .then((devices) => {
           logger.debug('Devices imported.');

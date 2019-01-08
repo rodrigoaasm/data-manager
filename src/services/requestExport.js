@@ -7,15 +7,11 @@ function clearTemplateRet(template) {
   template.forEach((obj) => {
     const item = obj;
     delete item.created;
-    delete item.status;
-    delete item.templates;
-    delete item.data_attrs;
     delete item.config_attrs;
+    delete item.data_attrs;
     item.attrs.forEach((attrs) => {
       const attr = attrs;
       delete attr.created;
-      delete attr.template_id;
-      delete attr.id;
     });
   });
   return template;
@@ -24,9 +20,19 @@ function clearTemplateRet(template) {
 function clearDeviceRet(devices) {
   devices.forEach((device) => {
     const item = device;
+    const keys = Object.keys(item.attrs);
+    const newAttrs = [];
+    keys.forEach((key) => {
+      item.attrs[key].forEach((obj) => {
+        const aux = obj;
+        delete aux.id;
+        delete aux.created;
+        delete aux.metadata;
+        newAttrs.push(aux);
+      });
+    });
     delete item.attrs;
-    delete item.created;
-    delete item.status;
+    item.attrs = newAttrs;
   });
   return devices;
 }

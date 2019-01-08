@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { logger } from '@dojot/dojot-module-logger';
-import generateToken from './generateToken';
+import Auth from './auth';
 
 const get = urlRequest => new Promise((resolve, reject) => {
   logger.debug(`Will call ${urlRequest}`);
-  const token = generateToken();
+  const token = Auth.retToken();
   const options = {
     headers: {
       authorization: token,
@@ -22,7 +22,7 @@ const get = urlRequest => new Promise((resolve, reject) => {
 
 const post = (urlRequest, body) => new Promise((resolve, reject) => {
   logger.debug(`Will call ${urlRequest}`);
-  const token = generateToken();
+  const token = Auth.retToken();
   axios({
     method: 'post',
     headers: {
@@ -42,7 +42,7 @@ const post = (urlRequest, body) => new Promise((resolve, reject) => {
 
 const _delete = urlRequest => new Promise((resolve, reject) => {
   logger.debug(`Will call delete ${urlRequest}`);
-  const token = generateToken();
+  const token = Auth.retToken();
   axios({
     method: 'delete',
     headers: {

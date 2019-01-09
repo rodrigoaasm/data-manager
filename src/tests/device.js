@@ -2,32 +2,44 @@ const device = {
   devices: [
     {
       attrs: {
-        1: [
+        296: [
           {
-            created: '2018-11-23T15:38:36.163701+00:00',
-            id: 1,
-            label: 'model-id',
-            static_value: 'model-001',
-            template_id: '1',
-            type: 'static',
-            value_type: 'string',
-          },
-          {
-            created: '2018-11-23T15:38:36.198161+00:00',
-            id: 2,
-            label: 'temperature',
-            template_id: '1',
+            created: '2019-01-09T11:25:03.963843+00:00',
+            id: 673,
+            label: 'temp',
+            metadata: [
+              {
+                created: '2019-01-09T11:25:04.119784+00:00',
+                id: 675,
+                label: 'meta',
+                static_value: 'meta',
+                type: 'meta',
+                updated: null,
+                value_type: 'string',
+              },
+            ],
+            static_value: '',
+            template_id: '296',
             type: 'dynamic',
             value_type: 'float',
           },
+          {
+            created: '2019-01-09T11:25:04.118540+00:00',
+            id: 674,
+            label: 'Name',
+            static_value: 'Device',
+            template_id: '296',
+            type: 'static',
+            value_type: 'string',
+          },
         ],
       },
-      created: '2018-11-23T15:38:36.289337+00:00',
-      id: 'e98b8',
+      created: '2019-01-09T11:25:42.287192+00:00',
+      id: '9bbd77',
       label: 'device',
       status: 'offline',
       templates: [
-        1,
+        296,
       ],
     },
   ],

@@ -4,7 +4,8 @@ import requestExport from '../services/requestExport';
 const router = Router();
 
 router.get('/export', (req, res) => {
-  requestExport()
+  const rawToken = req.get('authorization');
+  requestExport(rawToken)
     .then((exportData) => {
       res.json(exportData);
     })

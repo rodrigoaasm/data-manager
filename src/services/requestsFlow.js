@@ -2,8 +2,8 @@ import config from '../config';
 
 import Requests from '../utils/requests';
 
-const get = () => new Promise((resolve, reject) => {
-  Requests.get(`${config.flow_broker_url}/v1/flow`)
+const get = token => new Promise((resolve, reject) => {
+  Requests.get(token, `${config.flow_broker_url}/v1/flow`)
     .then((obj) => {
       resolve(obj);
     })
@@ -13,11 +13,11 @@ const get = () => new Promise((resolve, reject) => {
 });
 
 
-const post = body => new Promise((resolve, reject) => {
+const post = (token, body) => new Promise((resolve, reject) => {
   const calls = [];
   body.forEach((obj) => {
     const element = obj;
-    calls.push(Requests.post(`${config.flow_broker_url}/v1/flow`, element));
+    calls.push(Requests.post(token, `${config.flow_broker_url}/v1/flow`, element));
   });
 
   Promise.all(calls)

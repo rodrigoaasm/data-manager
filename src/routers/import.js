@@ -21,6 +21,12 @@ router.post('/import', [
   body('devices.*.id').exists().isString(),
   body('devices.*.label').exists().isString(),
   body('devices.*.templates').exists().isArray(),
+  body('devices.*.attrs').exists().isArray(),
+  body('devices.*.attrs.*.label').exists().isString(),
+  body('devices.*.attrs.*.static_value').exists().isString(),
+  body('devices.*.attrs.*.template_id').exists().isString(),
+  body('devices.*.attrs.*.type').exists().isString(),
+  body('devices.*.attrs.*.value_type').exists().isString(),
   // check flows
   body('flows', 'Not exist').exists(),
   body('flows', 'Need to be array').isArray(),
@@ -31,12 +37,13 @@ router.post('/import', [
   // check object into array;
   body('flows.*.flow.*.type').exists().isString(),
 ], (req, res) => {
+  const rawToken = req.get('authorization');
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json(errors.array());
   }
 
-  return requestImport.post(req.body)
+  return requestImport.post(rawToken, req.body)
     .then((ret) => {
       res.status(200).json(ret);
     })

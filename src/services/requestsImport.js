@@ -5,13 +5,13 @@ import requestFlow from './requestsFlow';
 import Requests from '../utils/requests';
 import config from '../config';
 
-async function deleteAllData() {
+async function deleteAllData(token) {
   logger.debug('Deleting all devices.');
-  await Requests._delete(`${config.device_manager_url}/device`);
+  await Requests._delete(token, `${config.device_manager_url}/device`);
   logger.debug('Deleting all templates.');
-  await Requests._delete(`${config.device_manager_url}/template`);
+  await Requests._delete(token, `${config.device_manager_url}/template`);
   logger.debug('Deleting all flows.');
-  await Requests._delete(`${config.flow_broker_url}/v1/flow`);
+  await Requests._delete(token, `${config.flow_broker_url}/v1/flow`);
 }
 
 function improveDeviceToBeCreated(newsIdTemplate, devices) {
@@ -112,28 +112,28 @@ function changeIdTemplateFlow(newflows, flows) {
  * @param {array} data data array to be imported on dojot, like the exported object.
  * @returns {array} return the imported objects on dojot.
  */
-const post = data => new Promise(async (resolve, reject) => {
+const post = (token, data) => new Promise(async (resolve, reject) => {
   logger.debug('Will import data.');
   try {
-    await deleteAllData();
+    await deleteAllData(token);
   } catch (error) {
     reject(error.toString());
     return;
   }
   const body = data;
   body.templates = removeMetadataIDTemplate(body.templates);
-  requestsTemplate.post(body.templates)
+  requestsTemplate.post(token, body.templates)
     .then((templates) => {
       logger.debug('Templates imported.');
       body.templates = templates;
       body.devices = improveDeviceToBeCreated(templates, body.devices);
-      requestsDevice.post(body.devices)
+      requestsDevice.post(token, body.devices)
         .then((devices) => {
           logger.debug('Devices imported.');
           body.devices = devices;
           body.flows = changeIdDeviceFlow(devices, body.flows);
           body.flows = changeIdTemplateFlow(templates, body.flows);
-          requestFlow.post(body.flows)
+          requestFlow.post(token, body.flows)
             .then((newflows) => {
               logger.debug('Flows imported.');
               const bodyTemplates = body.templates;

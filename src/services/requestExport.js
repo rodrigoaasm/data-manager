@@ -37,12 +37,12 @@ function clearDeviceRet(devices) {
   return devices;
 }
 
-const requestExport = () => new Promise((resolve, reject) => {
+const requestExport = token => new Promise((resolve, reject) => {
   logger.debug('Will export data');
   const requests = [
-    requestDevice.get(),
-    requestTemplate.get(),
-    requestFlow.get(),
+    requestDevice.get(token),
+    requestTemplate.get(token),
+    requestFlow.get(token),
   ];
   Promise.all(requests)
     .then((ret) => {

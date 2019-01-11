@@ -22,11 +22,6 @@ router.post('/import', [
   body('devices.*.label').exists().isString(),
   body('devices.*.templates').exists().isArray(),
   body('devices.*.attrs').exists().isArray(),
-  body('devices.*.attrs.*.label').exists().isString(),
-  body('devices.*.attrs.*.static_value').exists().isString(),
-  body('devices.*.attrs.*.template_id').exists().isString(),
-  body('devices.*.attrs.*.type').exists().isString(),
-  body('devices.*.attrs.*.value_type').exists().isString(),
   // check flows
   body('flows', 'Not exist').exists(),
   body('flows', 'Need to be array').isArray(),

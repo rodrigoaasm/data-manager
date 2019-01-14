@@ -14,10 +14,8 @@ Returns all currently configured flows
             {
                 "devices": [
                     {
-                        "created": "2019-01-09T11:25:42.287192+00:00",
                         "id": "9bbd77",
                         "label": "device",
-                        "status": "offline",
                         "templates": [
                             296
                         ],
@@ -52,7 +50,6 @@ Returns all currently configured flows
                                         "label": "meta",
                                         "static_value": "meta",
                                         "type": "meta",
-                                        "updated": null,
                                         "value_type": "string"
                                     }
                                 ],
@@ -289,119 +286,130 @@ Return all currently configured. Templates, devices and flows.
   + Body
 
             {
-                "devices": [
-                    {
-                        "created": "2019-01-09T11:25:42.287192+00:00",
-                        "id": "9bbd77",
-                        "label": "device",
-                        "status": "offline",
-                        "templates": [
-                            296
-                        ],
-                        "attrs": [
-                            {
-                                "label": "temp",
-                                "static_value": "",
-                                "template_id": "296",
-                                "type": "dynamic",
-                                "value_type": "float"
-                            },
-                            {
-                                "label": "Name",
-                                "static_value": "Device",
-                                "template_id": "296",
-                                "type": "static",
-                                "value_type": "string"
-                            }
-                        ]
-                    }
-                ],
-                "templates": [
-                    {
-                        "attrs": [
-                            {
-                                "id": 673,
-                                "label": "temp",
-                                "metadata": [
-                                    {
-                                        "created": "2019-01-09T11:25:04.119784+00:00",
-                                        "id": 675,
-                                        "label": "meta",
-                                        "static_value": "meta",
-                                        "type": "meta",
-                                        "updated": null,
-                                        "value_type": "string"
-                                    }
-                                ],
-                                "static_value": "",
-                                "template_id": "296",
-                                "type": "dynamic",
-                                "value_type": "float"
-                            },
-                            {
-                                "id": 674,
-                                "label": "Name",
-                                "static_value": "Name",
-                                "template_id": "296",
-                                "type": "static",
-                                "value_type": "string"
-                            }
-                        ],
-                        "id": 296,
-                        "label": "Tempalte"
-                    }
-                ],
-                "flows": [
-                    {
-                        "name": "flow",
-                        "enabled": true,
-                        "id": "20c6c697-3d3a-4706-8267-72669a6016de",
-                        "flow": [
-                            {
-                                "id": "8a89221c.f5477",
-                                "type": "tab",
-                                "label": "Flow 1"
-                            },
-                            {
-                                "id": "1dfbd338.9b187d",
-                                "type": "device in",
-                                "z": "8a89221c.f5477",
-                                "name": "Device",
-                                "device_source_id": "device (9bbd77)",
-                                "status": "false",
-                                "_device_id": "9bbd77",
-                                "_device_label": "",
-                                "_device_type": "",
-                                "x": 147.5,
-                                "y": 98,
-                                "wires": [
-                                    [
-                                        "92f3408b.cb051"
-                                    ]
-                                ]
-                            },
-                            {
-                                "id": "92f3408b.cb051",
-                                "type": "http",
-                                "z": "8a89221c.f5477",
-                                "name": "",
-                                "method": "GET",
-                                "ret": "txt",
-                                "body": "payload",
-                                "response": "payload.response",
-                                "url": "http://ptsv2.com/t/03n2y-1547033185/post",
-                                "x": 254.5,
-                                "y": 195,
-                                "wires": [
-                                    []
-                                ]
-                            }
-                        ],
-                        "created": 1547033210480,
-                        "updated": 1547033210480
-                    }
-                ]
-            }
+              "devices": [
+                  {
+                      "id": "b65f24",
+                      "label": "device",
+                      "templates": [
+                          776
+                      ],
+                      "attrs": [
+                          {
+                              "id": 2181,
+                              "label": "temp",
+                              "metadata": [
+                                  {
+                                      "created": "2019-01-11T16:49:07.960939+00:00",
+                                      "id": 2183,
+                                      "label": "meta",
+                                      "static_value": "meta",
+                                      "type": "meta",
+                                      "updated": null,
+                                      "value_type": "string"
+                                  }
+                              ],
+                              "static_value": "",
+                              "template_id": "776",
+                              "type": "dynamic",
+                              "value_type": "float"
+                          },
+                          {
+                              "id": 2182,
+                              "label": "Name",
+                              "static_value": "Device",
+                              "template_id": "776",
+                              "type": "static",
+                              "value_type": "string"
+                          }
+                      ]
+                  }
+              ],
+              "templates": [
+                  {
+                      "attrs": [
+                          {
+                              "id": 2181,
+                              "label": "temp",
+                              "metadata": [
+                                  {
+                                      "created": "2019-01-11T16:49:07.960939+00:00",
+                                      "id": 2183,
+                                      "label": "meta",
+                                      "static_value": "meta",
+                                      "type": "meta",
+                                      "updated": null,
+                                      "value_type": "string"
+                                  }
+                              ],
+                              "static_value": "",
+                              "template_id": "776",
+                              "type": "dynamic",
+                              "value_type": "float"
+                          },
+                          {
+                              "id": 2182,
+                              "label": "Name",
+                              "static_value": "Name",
+                              "template_id": "776",
+                              "type": "static",
+                              "value_type": "string"
+                          }
+                      ],
+                      "id": 776,
+                      "label": "Tempalte"
+                  }
+              ],
+              "flows": [
+                  {
+                      "name": "flow",
+                      "enabled": true,
+                      "id": "18f97f09-cec9-47ec-936d-f4389173f2c0",
+                      "flow": [
+                          {
+                              "id": "8a89221c.f5477",
+                              "type": "tab",
+                              "label": "Flow 1"
+                          },
+                          {
+                              "id": "1dfbd338.9b187d",
+                              "type": "device in",
+                              "z": "8a89221c.f5477",
+                              "name": "Device",
+                              "device_source_id": "Device (b65f24)",
+                              "status": "false",
+                              "_device_id": "b65f24",
+                              "_device_label": "",
+                              "_device_type": "",
+                              "x": 147.5,
+                              "y": 98,
+                              "wires": [
+                                  [
+                                      "92f3408b.cb051"
+                                  ]
+                              ]
+                          },
+                          {
+                              "id": "92f3408b.cb051",
+                              "type": "http",
+                              "z": "8a89221c.f5477",
+                              "name": "",
+                              "method": "GET",
+                              "ret": "txt",
+                              "body": "payload",
+                              "response": "payload.response",
+                              "url": "http://ptsv2.com/t/03n2y-1547033185/post",
+                              "x": 254.5,
+                              "y": 195,
+                              "wires": [
+                                  []
+                              ]
+                          }
+                      ],
+                      "created": 1547225348029,
+                      "updated": 1547225348029
+                  }
+              ]
+          }
 
 + Response 400 (application/json; charset=utf-8)
 

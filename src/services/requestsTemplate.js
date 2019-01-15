@@ -2,7 +2,7 @@ import config from '../config';
 
 import Requests from '../utils/requests';
 
-const get = () => new Promise((resolve, reject) => {
+const get = token => new Promise((resolve, reject) => {
   const dataReturn = {
     templates: [],
   };
@@ -13,7 +13,7 @@ const get = () => new Promise((resolve, reject) => {
   };
 
   const request = (url) => {
-    Requests.get(url)
+    Requests.get(token, url)
       .then((obj) => {
         fill(obj);
         if (obj.pagination.has_next) {
@@ -30,11 +30,11 @@ const get = () => new Promise((resolve, reject) => {
   request(`${config.device_manager_url}/template`);
 });
 
-const post = body => new Promise((resolve, reject) => {
+const post = (token, body) => new Promise((resolve, reject) => {
   const calls = [];
   body.forEach((obj) => {
     const element = obj;
-    calls.push(Requests.post(`${config.device_manager_url}/template`, element));
+    calls.push(Requests.post(token, `${config.device_manager_url}/template`, element));
   });
 
   Promise.all(calls)

@@ -5,7 +5,6 @@ import Import from './routers/import';
 import config from './config';
 
 const app = express();
-
 app.use(bodyParser.json());
 app.use(Export);
 app.use(Import);

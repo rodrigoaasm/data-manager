@@ -56,14 +56,24 @@ function improveDeviceToBeCreated(newsIdTemplate, devices) {
 function changeIdDeviceFlow(newDevices, flows) {
   const flowsList = flows;
   flowsList.forEach((flow) => {
-    flow.flow.forEach((objIn) => {
-      const obj = objIn;
-      if ((obj.type === 'device in') || (obj.type === 'device out') || (obj.type === 'actuate')) {
-        newDevices.forEach((item) => {
-          if (item.oldId === obj._device_id) {
-            obj._device_id = item.newId;
-            obj.device_source_id = `Device (${item.newId})`;
+    flow.flow.forEach((nodeIn) => {
+      const node = nodeIn;
+      if ((node.type === 'device in') || (node.type === 'actuate')) {
+        newDevices.forEach((device) => {
+          if (device.oldId === node._device_id) {
+            node._device_id = device.newId;
+            node.device_source_id = `Device (${device.newId})`;
           }
+        });
+      } else if (node.type === 'device out') {
+        newDevices.forEach((device) => {
+          let newDevicesIds = [];
+          node.devices_source_configured.forEach( (deviceId) => {
+            if (device.oldId === deviceId) {
+              newDevicesIds.push(device.newId);
+            }
+          });
+          node.devices_source_configured = newDevicesIds;
         });
       }
     });

@@ -3,7 +3,7 @@ import requestFlow from './requestsFlow';
 import Requests from '../utils/requests';
 import config from '../config';
 
-async function deleteAllData(token) {
+async function deleteAllFlows(token) {
   logger.debug('Deleting all flows.');
   await Requests._delete(token, `${config.flow_broker_url}/v1/flow`);
 }
@@ -15,7 +15,7 @@ async function deleteAllData(token) {
 const post = (token, data) => new Promise(async (resolve, reject) => {
   logger.debug('Will import data.');
   try {
-    await deleteAllData(token);
+    await deleteAllFlows(token);
   } catch (error) {
     reject(error.toString());
     return;
@@ -31,7 +31,7 @@ const post = (token, data) => new Promise(async (resolve, reject) => {
         resolve({'message': 'data imported!'});
       })
       .catch((err) => {
-        logger.debug(`Received error on import Devices, ${err}. Rejecting the request`);
+        logger.debug(`Received error on import templates and devices, ${err}. Rejecting the request`);
         reject(err);
       });
   })

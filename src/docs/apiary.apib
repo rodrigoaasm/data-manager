@@ -21,6 +21,7 @@ Returns all currently configured flows
                         ],
                         "attrs": [
                             {
+                                "id": 673,
                                 "label": "temp",
                                 "static_value": "",
                                 "template_id": "296",
@@ -28,6 +29,7 @@ Returns all currently configured flows
                                 "value_type": "float"
                             },
                             {
+                                "id": 674,
                                 "label": "Name",
                                 "static_value": "Device",
                                 "template_id": "296",
@@ -123,145 +125,12 @@ Returns all currently configured flows
                 ]
             }
 
-+ Response 200 (application/json; charset=utf-8)
++ Response 201 (application/json; charset=utf-8)
 
   + Body
 
             {
-                "devices": [
-                    {
-                        "id": "b59044",
-                        "label": "device"
-                    }
-                ],
-                "templates": [
-                    {
-                        "attrs": [
-                            {
-                                "created": "2018-11-27T11:40:50.755884+00:00",
-                                "id": 47,
-                                "label": "model-id",
-                                "static_value": "model-001",
-                                "template_id": "24",
-                                "type": "static",
-                                "value_type": "string"
-                            },
-                            {
-                                "created": "2018-11-27T11:40:50.813644+00:00",
-                                "id": 48,
-                                "label": "temperature",
-                                "template_id": "24",
-                                "type": "dynamic",
-                                "value_type": "float"
-                            }
-                        ],
-                        "config_attrs": [],
-                        "created": "2018-11-27T11:40:50.754898+00:00",
-                        "data_attrs": [
-                            {
-                                "created": "2018-11-27T11:40:50.755884+00:00",
-                                "id": 47,
-                                "label": "model-id",
-                                "static_value": "model-001",
-                                "template_id": "24",
-                                "type": "static",
-                                "value_type": "string"
-                            },
-                            {
-                                "created": "2018-11-27T11:40:50.813644+00:00",
-                                "id": 48,
-                                "label": "temperature",
-                                "template_id": "24",
-                                "type": "dynamic",
-                                "value_type": "float"
-                            }
-                        ],
-                        "id": 24,
-                        "label": "Template"
-                    }
-                ],
-                "flows": [
-                    {
-                        "message": "ok",
-                        "flow": {
-                            "name": "Flow",
-                            "enabled": true,
-                            "id": "7339c7b7-bd30-4515-991c-e576e76bd184",
-                            "flow": [
-                                {
-                                    "id": "b032cba2.69981",
-                                    "type": "tab",
-                                    "name": "Sample flow"
-                                },
-                                {
-                                    "id": "f7ae7ff1.f3f3f",
-                                    "type": "device in",
-                                    "z": "b032cba2.69981",
-                                    "name": "device",
-                                    "device": "{\"id\":\"d4c8f5\"}",
-                                    "status": "false",
-                                    "_device_id": "d4c8f5",
-                                    "_device_label": "",
-                                    "_device_type": "",
-                                    "x": 102.5,
-                                    "y": 164,
-                                    "wires": [
-                                        [
-                                            "d4d0b51f.60b0b"
-                                        ]
-                                    ]
-                                },
-                                {
-                                    "id": "d4d0b51f.60b0b",
-                                    "type": "switch",
-                                    "z": "b032cba2.69981",
-                                    "name": "",
-                                    "property": "payload",
-                                    "propertyType": "msg",
-                                    "rules": [
-                                        {
-                                            "t": "eq",
-                                            "v": "",
-                                            "vt": "str"
-                                        }
-                                    ],
-                                    "checkall": "true",
-                                    "outputs": 1,
-                                    "x": 308,
-                                    "y": 196,
-                                    "wires": [
-                                        "ad106680.4d93e8"
-                                    ]
-                                },
-                                {
-                                    "id": "ad106680.4d93e8",
-                                    "type": "change",
-                                    "z": "b032cba2.69981",
-                                    "name": "",
-                                    "rules": [
-                                        {
-                                            "t": "set",
-                                            "p": "payload",
-                                            "pt": "msg",
-                                            "to": "",
-                                            "tot": "str"
-                                        }
-                                    ],
-                                    "action": "",
-                                    "property": "",
-                                    "from": "",
-                                    "to": "",
-                                    "reg": false,
-                                    "x": 434,
-                                    "y": 263,
-                                    "wires": []
-                                }
-                            ],
-                            "created": 1543318850887,
-                            "updated": 1543318850887
-                        }
-                    }
-                ]
+                "message": "data imported!"
             }
 
 + Response 400 (application/json; charset=utf-8)

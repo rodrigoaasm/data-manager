@@ -28,6 +28,10 @@ app.post('/template', (req, res) => {
   res.json({ template: postTemplate });
 });
 
+app.post('/import', (req, res) => {
+  res.json({message: "data imported!"});
+});
+
 app.delete('/template', (req, res) => {
   res.sendStatus(200);
 });

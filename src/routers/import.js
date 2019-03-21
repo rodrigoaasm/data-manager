@@ -40,7 +40,7 @@ router.post('/import', [
 
   return requestImport.post(rawToken, req.body)
     .then((ret) => {
-      res.status(200).json(ret);
+      res.status(201).json(ret);
     })
     .catch((err) => {
       const error = {

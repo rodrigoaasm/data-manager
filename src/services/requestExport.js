@@ -2,6 +2,7 @@ import { logger } from '@dojot/dojot-module-logger';
 import requestDevice from './requestsDevice';
 import requestFlow from './requestsFlow';
 import requestTemplate from './requestsTemplate';
+import requestNode from './requestsNode';
 
 function clearTemplateRet(template) {
   template.forEach((obj) => {
@@ -59,6 +60,7 @@ const requestExport = token => new Promise((resolve, reject) => {
   const requests = [
     requestDevice.get(token),
     requestTemplate.get(token),
+    requestNode.get(token),
     requestFlow.get(token),
   ];
   Promise.all(requests)
@@ -68,7 +70,8 @@ const requestExport = token => new Promise((resolve, reject) => {
       const allData = {
         devices: clearDeviceRet(ret[0].devices, templatesRet),
         templates: templatesRet,
-        flows: ret[2].flows,
+        flowRemoteNodes: ret[2].nodes,
+        flows: ret[3].flows
       };
       resolve(allData);
     })

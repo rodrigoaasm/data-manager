@@ -5,6 +5,7 @@ const postTemplate = require('./postTemplate');
 const postDevice = require('./postDevice');
 const postFlow = require('./postFlow');
 const flow = require('./flow');
+const node = require('./node');
 
 const app = express();
 
@@ -46,6 +47,18 @@ app.post('/v1/flow', (req, res) => {
 
 app.delete('/v1/flow', (req, res) => {
   res.sendStatus(200);
+});
+
+app.get('/v1/node', (req, res) => {
+  res.json(node);
+});
+
+app.post('/v1/node', (req, res) => {
+  res.json({message: "ok"});
+});
+
+app.delete('/v1/node', (req, res) => {
+  res.json({message: "ok"});
 });
 
 app.listen(3030, () => {

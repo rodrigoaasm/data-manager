@@ -11,18 +11,18 @@ documentation](http://dojotdocs.readthedocs.io/) to check all of them.
 # Import / Export
 Before describing the DataManager APIs, we must explain the import and export functionality. 
 When you export data from Dojot, a JSON file is generated for you. That JSON file contains
-all current templates, devices, flows and remote nodes in your environment. You can save this file
+all current templates, devices, flows and remote nodes in your tenant. You can save this file
 to import this data later. The import functionality uses this file to regenerate data
 inside Dojot. However, when you import that file, then the templates, devices, flows and remote nodes will
-be created again. It's important to know that this operation is destructive. This means that, 
-if you have templates, devices, flows or remote nodes in your environment, all of them will be
+be created in your tenant. It's important to know that this operation is destructive. This means that, 
+if you have templates, devices, flows or remote nodes in your tenant, all of them will be
 deleted during the import process, before they are generated. So, be careful. 
 
 
 ## Import [/import]
 
 ### Deletes and imports all data [POST]
-Deletes all templates, devices, flows and remote nodes and creates new ones.
+Deletes all templates, devices, flows and remote nodes and creates new ones in your tenant.
 
 + Request (application/json; charset=utf-8)
   + Headers
@@ -174,7 +174,7 @@ Deletes all templates, devices, flows and remote nodes and creates new ones.
 ## Export [/export]
 
 ### Get all data to be exported [GET /export]
-Return all current templates, devices, flows and remote nodes.
+Return all current templates, devices, flows and remote nodes in your tenant.
 
 + Request (application/json; charset=utf-8)
   + Headers

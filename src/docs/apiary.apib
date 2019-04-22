@@ -1,9 +1,29 @@
-# Data-manager
+FORMAT: 1A
+HOST: http://localhost:3000
+
+# Data Management API
+
+This document describes the APIs using DataManager as a standalone process. If used with
+other dojot's components, the endpoints might be changed a bit. Check [dojot's
+documentation](http://dojotdocs.readthedocs.io/) to check all of them.
+
+
+# Import / Export
+Before describing the DataManager APIs, we must explain the import and export functionality. 
+When you export data from Dojot, a JSON file is generated for you. That JSON file contains
+all current templates, devices, flows and remote nodes in your tenant. You can save this file
+to import this data later. The import functionality uses this file to regenerate data
+inside Dojot. However, when you import that file, then the templates, devices, flows and remote nodes will
+be created in your tenant. It's important to know that this operation is destructive. This means that, 
+if you have templates, devices, flows or remote nodes in your tenant, all of them will be
+deleted during the import process, before they are generated. So, be careful. 
+
 
 ## Import [/import]
 
-### Configure a new templates, devices and flows [POST /import]
-Returns all currently configured flows
+### Deletes and imports all data [POST]
+Deletes all templates, devices, flows and remote nodes and creates new ones in your tenant.
+
 + Request (application/json; charset=utf-8)
   + Headers
 
@@ -76,11 +96,11 @@ Returns all currently configured flows
                 "flowRemoteNodes": [
                     {
                         "id": "kelvin",
-                        "image": "raulnegreiros/kelvin:3.0.0-alpha2"
+                        "image": "dojot/kelvin-example:3.0.0-alpha2"
                     },
                     {
                         "id": "arithmetic-mean",
-                        "image": "raulnegreiros/arithmetic-mean:3.0.0-alpha2"
+                        "image": "dojot/arithmetic-mean-example:3.0.0-alpha2"
                     }
                 ],
                 "flows": [
@@ -148,13 +168,14 @@ Returns all currently configured flows
   + Body
 
             {
-                "message": "message"
+                "message": "error message"
             }
 
 ## Export [/export]
 
 ### Get all data to be exported [GET /export]
-Return all currently configured. Templates, devices and flows.
+Return all current templates, devices, flows and remote nodes in your tenant.
+
 + Request (application/json; charset=utf-8)
   + Headers
 
@@ -165,145 +186,145 @@ Return all currently configured. Templates, devices and flows.
   + Body
 
             {
-              "devices": [
-                  {
-                      "id": "b65f24",
-                      "label": "device",
-                      "templates": [
-                          776
-                      ],
-                      "attrs": [
-                          {
-                              "id": 2181,
-                              "label": "temp",
-                              "metadata": [
-                                  {
-                                      "created": "2019-01-11T16:49:07.960939+00:00",
-                                      "id": 2183,
-                                      "label": "meta",
-                                      "static_value": "meta",
-                                      "type": "meta",
-                                      "updated": null,
-                                      "value_type": "string"
-                                  }
-                              ],
-                              "static_value": "",
-                              "template_id": "776",
-                              "type": "dynamic",
-                              "value_type": "float"
-                          },
-                          {
-                              "id": 2182,
-                              "label": "Name",
-                              "static_value": "Device",
-                              "template_id": "776",
-                              "type": "static",
-                              "value_type": "string"
-                          }
-                      ]
-                  }
-              ],
-              "templates": [
-                  {
-                      "attrs": [
-                          {
-                              "id": 2181,
-                              "label": "temp",
-                              "metadata": [
-                                  {
-                                      "created": "2019-01-11T16:49:07.960939+00:00",
-                                      "id": 2183,
-                                      "label": "meta",
-                                      "static_value": "meta",
-                                      "type": "meta",
-                                      "updated": null,
-                                      "value_type": "string"
-                                  }
-                              ],
-                              "static_value": "",
-                              "template_id": "776",
-                              "type": "dynamic",
-                              "value_type": "float"
-                          },
-                          {
-                              "id": 2182,
-                              "label": "Name",
-                              "static_value": "Name",
-                              "template_id": "776",
-                              "type": "static",
-                              "value_type": "string"
-                          }
-                      ],
-                      "id": 776,
-                      "label": "Tempalte"
-                  }
-              ],
-              "flowRemoteNodes": [
-                {
-                    "id": "kelvin",
-                    "image": "raulnegreiros/kelvin:3.0.0-alpha2"
-                },
-                {
-                    "id": "arithmetic-mean",
-                    "image": "raulnegreiros/arithmetic-mean:3.0.0-alpha2"
-                }
-              ],
-              "flows": [
-                  {
-                      "name": "flow",
-                      "enabled": true,
-                      "id": "18f97f09-cec9-47ec-936d-f4389173f2c0",
-                      "flow": [
-                          {
-                              "id": "8a89221c.f5477",
-                              "type": "tab",
-                              "label": "Flow 1"
-                          },
-                          {
-                              "id": "1dfbd338.9b187d",
-                              "type": "device in",
-                              "z": "8a89221c.f5477",
-                              "name": "Device",
-                              "device_source_id": "Device (b65f24)",
-                              "status": "false",
-                              "_device_id": "b65f24",
-                              "_device_label": "",
-                              "_device_type": "",
-                              "x": 147.5,
-                              "y": 98,
-                              "wires": [
-                                  [
-                                      "92f3408b.cb051"
-                                  ]
-                              ]
-                          },
-                          {
-                              "id": "92f3408b.cb051",
-                              "type": "http",
-                              "z": "8a89221c.f5477",
-                              "name": "",
-                              "method": "GET",
-                              "ret": "txt",
-                              "body": "payload",
-                              "response": "payload.response",
-                              "url": "http://ptsv2.com/t/03n2y-1547033185/post",
-                              "x": 254.5,
-                              "y": 195,
-                              "wires": [
-                                  []
-                              ]
-                          }
-                      ],
-                      "created": 1547225348029,
-                      "updated": 1547225348029
-                  }
-              ]
-          }
+                "devices": [
+                    {
+                        "id": "b65f24",
+                        "label": "device",
+                        "templates": [
+                            776
+                        ],
+                        "attrs": [
+                            {
+                                "id": 2181,
+                                "label": "temp",
+                                "metadata": [
+                                    {
+                                        "created": "2019-01-11T16:49:07.960939+00:00",
+                                        "id": 2183,
+                                        "label": "meta",
+                                        "static_value": "meta",
+                                        "type": "meta",
+                                        "updated": null,
+                                        "value_type": "string"
+                                    }
+                                ],
+                                "static_value": "",
+                                "template_id": "776",
+                                "type": "dynamic",
+                                "value_type": "float"
+                            },
+                            {
+                                "id": 2182,
+                                "label": "Name",
+                                "static_value": "Device",
+                                "template_id": "776",
+                                "type": "static",
+                                "value_type": "string"
+                            }
+                        ]
+                    }
+                ],
+                "templates": [
+                    {
+                        "attrs": [
+                            {
+                                "id": 2181,
+                                "label": "temp",
+                                "metadata": [
+                                    {
+                                        "created": "2019-01-11T16:49:07.960939+00:00",
+                                        "id": 2183,
+                                        "label": "meta",
+                                        "static_value": "meta",
+                                        "type": "meta",
+                                        "updated": null,
+                                        "value_type": "string"
+                                    }
+                                ],
+                                "static_value": "",
+                                "template_id": "776",
+                                "type": "dynamic",
+                                "value_type": "float"
+                            },
+                            {
+                                "id": 2182,
+                                "label": "Name",
+                                "static_value": "Name",
+                                "template_id": "776",
+                                "type": "static",
+                                "value_type": "string"
+                            }
+                        ],
+                        "id": 776,
+                        "label": "Tempalte"
+                    }
+                ],
+                "flowRemoteNodes": [
+                    {
+                        "id": "kelvin",
+                        "image": "dojot/kelvin-example:3.0.0-alpha2"
+                    },
+                    {
+                        "id": "arithmetic-mean",
+                        "image": "dojot/arithmetic-mean-example:3.0.0-alpha2"
+                    }
+                ],
+                "flows": [
+                    {
+                        "name": "flow",
+                        "enabled": true,
+                        "id": "18f97f09-cec9-47ec-936d-f4389173f2c0",
+                        "flow": [
+                            {
+                                "id": "8a89221c.f5477",
+                                "type": "tab",
+                                "label": "Flow 1"
+                            },
+                            {
+                                "id": "1dfbd338.9b187d",
+                                "type": "device in",
+                                "z": "8a89221c.f5477",
+                                "name": "Device",
+                                "device_source_id": "Device (b65f24)",
+                                "status": "false",
+                                "_device_id": "b65f24",
+                                "_device_label": "",
+                                "_device_type": "",
+                                "x": 147.5,
+                                "y": 98,
+                                "wires": [
+                                    [
+                                        "92f3408b.cb051"
+                                    ]
+                                ]
+                            },
+                            {
+                                "id": "92f3408b.cb051",
+                                "type": "http",
+                                "z": "8a89221c.f5477",
+                                "name": "",
+                                "method": "GET",
+                                "ret": "txt",
+                                "body": "payload",
+                                "response": "payload.response",
+                                "url": "http://ptsv2.com/t/03n2y-1547033185/post",
+                                "x": 254.5,
+                                "y": 195,
+                                "wires": [
+                                    []
+                                ]
+                            }
+                        ],
+                        "created": 1547225348029,
+                        "updated": 1547225348029
+                    }
+                ]
+            }
 
 + Response 400 (application/json; charset=utf-8)
 
   + Body
 
             {
-                "message": "message"
+                "message": "error message"
             }

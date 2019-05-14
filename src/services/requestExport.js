@@ -3,6 +3,7 @@ import requestDevice from './requestsDevice';
 import requestFlow from './requestsFlow';
 import requestTemplate from './requestsTemplate';
 import requestNode from './requestsNode';
+import requestCron from './requestCron';
 
 function clearTemplateRet(template) {
   template.forEach((obj) => {
@@ -62,6 +63,8 @@ const requestExport = token => new Promise((resolve, reject) => {
     requestTemplate.get(token),
     requestNode.get(token),
     requestFlow.get(token),
+    requestCron.get(token)
+
   ];
   Promise.all(requests)
     .then((ret) => {
@@ -71,7 +74,8 @@ const requestExport = token => new Promise((resolve, reject) => {
         devices: clearDeviceRet(ret[0].devices, templatesRet),
         templates: templatesRet,
         flowRemoteNodes: ret[2].nodes,
-        flows: ret[3].flows
+        flows: ret[3].flows,
+        cronJobs: ret[4]
       };
       resolve(allData);
     })

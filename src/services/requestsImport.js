@@ -1,6 +1,7 @@
 import { logger } from '@dojot/dojot-module-logger';
 import requestFlow from './requestsFlow';
 import requestNode from './requestsNode';
+import requestCron from './requestCron';
 import Requests from '../utils/requests';
 import config from '../config';
 
@@ -10,7 +11,7 @@ import config from '../config';
  */
 const post = (token, data) => new Promise(async (resolve, reject) => {
   const body = data;
-  
+
   logger.debug('Will import data.');
 
   try {
@@ -24,13 +25,19 @@ const post = (token, data) => new Promise(async (resolve, reject) => {
     logger.debug('Flows imported.');
     await Requests.post(token, `${config.device_manager_url}/import`, {templates: body.templates, devices: body.devices});
     logger.debug('Devices and templates imported.');
+    await Requests._delete(token, `${config.cron_url}/v1/jobs`);
+    logger.debug('Cron jobs deleted');
+    if(body.hasOwnProperty('cronJobs')) {
+      await requestCron.put(token, body.cronJobs);
+      logger.debug('Cron jobs imported');
+    }
     resolve({'message': 'data imported!'});
   } catch (error) {
     logger.debug(`Received error on import data, ${error}. Rejecting the request`);
     reject(error.toString());
     return;
   }
-  
+
 });
 
 export default { post };

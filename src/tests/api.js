@@ -6,6 +6,7 @@ const postDevice = require('./postDevice');
 const postFlow = require('./postFlow');
 const flow = require('./flow');
 const node = require('./node');
+const cron = require('./cron');
 
 const app = express();
 
@@ -60,6 +61,19 @@ app.post('/v1/node', (req, res) => {
 app.delete('/v1/node', (req, res) => {
   res.json({message: "ok"});
 });
+
+app.get('/cron/v1/jobs', (req, res) => {
+  res.status(200).json(cron.jobs);
+});
+
+app.delete('/cron/v1/jobs', (req, res) => {
+  res.status(204).send();
+});
+
+app.put('/cron/v1/jobs/:id', (req, res) => {
+  res.status(201).json({status: 'success', jobId: req.params.id});
+});
+
 
 app.listen(3030, () => {
   console.log('server test running');

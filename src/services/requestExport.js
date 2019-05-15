@@ -4,54 +4,46 @@ import requestFlow from './requestsFlow';
 import requestTemplate from './requestsTemplate';
 import requestNode from './requestsNode';
 
-function clearTemplateRet(template) {
-  template.forEach((obj) => {
-    const item = obj;
-    delete item.created;
-    delete item.config_attrs;
-    delete item.data_attrs;
-    item.attrs.forEach((attrs) => {
-      const attr = attrs;
-      delete attr.created;
-    });
-  });
-  return template;
+function clearTemplateRet(templates) {
+  for (let i = 0; i < templates.length; i += 1) {
+    const template = templates[i];
+    delete template.created;
+    delete template.config_attrs;
+    delete template.data_attrs;
+    for (let j = 0; j < template.attrs.length; j += 1) {
+      delete template.attrs[j].created;
+    }
+  }
+  return templates;
 }
 
-function clearDeviceRet(devices, templates) {
-  devices.forEach((device) => {
-    const item = device;
-    delete item.created;
-    delete item.updated;
-    const keys = Object.keys(item.attrs);
-    const newAttrs = [];
-    keys.forEach((key) => {
-      item.attrs[key].forEach((obj) => {
-        const aux = obj;
-        templates.forEach((template) => {
-          template.attrs.forEach((templateAttr) => {
-            if (templateAttr.id === aux.id) {
-              const templateKeys = Object.keys(templateAttr);
-              delete aux.created;
-              let allEqual = true;
-              templateKeys.forEach((keyValue) => {
-                if ((aux[keyValue] === templateAttr[keyValue]) && (allEqual === true)) {
-                  allEqual = true;
-                } else {
-                  allEqual = false;
-                }
-              });
-              if (!allEqual) {
-                newAttrs.push(aux);
-              }
+function clearDeviceRet(devices) {
+  for (let i = 0; i < devices.length; i += 1) {
+    const device = devices[i];
+    delete device.created;
+    delete device.updated;
+    const deviceTemplates = Object.keys(device.attrs);
+    const overridenAttrs = [];
+    for (let j = 0; j < deviceTemplates.length; j += 1) {
+      const attrsFromTemplate = device.attrs[deviceTemplates[j]];
+      for (let k = 0; k < attrsFromTemplate.length; k += 1) {
+        const deviceAttr = attrsFromTemplate[k];
+        if ((deviceAttr.is_static_overridden)
+        && (deviceAttr.is_static_overridden === true)) {
+          overridenAttrs.push(deviceAttr);
+        } else if (deviceAttr.metadata) {
+          for (let l = 0; l < deviceAttr.metadata.length; l += 1) {
+            const deviceMetadata = deviceAttr.metadata[l];
+            if ((deviceMetadata.is_static_overridden)
+            && (deviceMetadata.is_static_overridden === true)) {
+              overridenAttrs.push(deviceAttr);
             }
-          });
-        });
-      });
-    });
-    delete item.attrs;
-    item.attrs = newAttrs;
-  });
+          }
+        }
+      }
+    }
+    device.attrs = overridenAttrs;
+  }
   return devices;
 }
 
@@ -66,12 +58,11 @@ const requestExport = token => new Promise((resolve, reject) => {
   Promise.all(requests)
     .then((ret) => {
       logger.debug('Data received.');
-      const templatesRet = clearTemplateRet(ret[1].templates);
       const allData = {
-        devices: clearDeviceRet(ret[0].devices, templatesRet),
-        templates: templatesRet,
+        devices: clearDeviceRet(ret[0].devices),
+        templates: clearTemplateRet(ret[1].templates),
         flowRemoteNodes: ret[2].nodes,
-        flows: ret[3].flows
+        flows: ret[3].flows,
       };
       resolve(allData);
     })

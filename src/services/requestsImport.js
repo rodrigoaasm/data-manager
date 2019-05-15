@@ -10,7 +10,7 @@ import config from '../config';
  */
 const post = (token, data) => new Promise(async (resolve, reject) => {
   const body = data;
-  
+
   logger.debug('Will import data.');
 
   try {
@@ -22,15 +22,13 @@ const post = (token, data) => new Promise(async (resolve, reject) => {
     logger.debug('Nodes imported.');
     await requestFlow.post(token, body.flows);
     logger.debug('Flows imported.');
-    await Requests.post(token, `${config.device_manager_url}/import`, {templates: body.templates, devices: body.devices});
+    await Requests.post(token, `${config.device_manager_url}/import`, { templates: body.templates, devices: body.devices });
     logger.debug('Devices and templates imported.');
-    resolve({'message': 'data imported!'});
+    return resolve({ message: 'data imported!' });
   } catch (error) {
     logger.debug(`Received error on import data, ${error}. Rejecting the request`);
-    reject(error.toString());
-    return;
+    return reject(error.toString());
   }
-  
 });
 
 export default { post };

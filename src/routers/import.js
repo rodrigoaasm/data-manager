@@ -22,7 +22,7 @@ router.post('/import', [
   body('devices.*.label').exists().isString(),
   body('devices.*.templates').exists().isArray(),
   body('devices.*.attrs').exists().isArray(),
-  //check flow remote nodes
+  // check flow remote nodes
   body('flowRemoteNodes', 'Not exist').exists(),
   body('flowRemoteNodes', 'Need to be array').isArray(),
   // check object into array;

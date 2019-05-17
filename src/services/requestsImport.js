@@ -23,7 +23,7 @@ const post = (token, data) => new Promise(async (resolve, reject) => {
     logger.debug('Nodes imported.');
     await requestFlow.post(token, body.flows);
     logger.debug('Flows imported.');
-    await Requests.post(token, `${config.device_manager_url}/import`, {templates: body.templates, devices: body.devices});
+    await Requests.post(token, `${config.device_manager_url}/import`, { templates: body.templates, devices: body.devices });
     logger.debug('Devices and templates imported.');
     await Requests._delete(token, `${config.cron_url}/v1/jobs`);
     logger.debug('Cron jobs deleted');
@@ -31,13 +31,11 @@ const post = (token, data) => new Promise(async (resolve, reject) => {
       await requestCron.put(token, body.cronJobs);
       logger.debug('Cron jobs imported');
     }
-    resolve({'message': 'data imported!'});
+    return resolve({ message: 'data imported!' });
   } catch (error) {
     logger.debug(`Received error on import data, ${error}. Rejecting the request`);
-    reject(error.toString());
-    return;
+    return reject(error.toString());
   }
-
 });
 
 export default { post };

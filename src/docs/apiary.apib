@@ -9,14 +9,14 @@ documentation](http://dojotdocs.readthedocs.io/) to check all of them.
 
 
 # Import / Export
-Before describing the DataManager APIs, we must explain the import and export functionality. 
+Before describing the DataManager APIs, we must explain the import and export functionality.
 When you export data from Dojot, a JSON file is generated for you. That JSON file contains
-all current templates, devices, flows and remote nodes in your tenant. You can save this file
+all current templates, devices, flows, remote nodes, and cron jobs in your tenant. You can save this file
 to import this data later. The import functionality uses this file to regenerate data
-inside Dojot. However, when you import that file, then the templates, devices, flows and remote nodes will
-be created in your tenant. It's important to know that this operation is destructive. This means that, 
-if you have templates, devices, flows or remote nodes in your tenant, all of them will be
-deleted during the import process, before they are generated. So, be careful. 
+inside Dojot. However, when you import that file, then the templates, devices, flows, remote nodes, and cron jobs will
+be created in your tenant. It's important to know that this operation is DESTRUCTIVE. This means that,
+if you have templates, devices, flows, remote nodes or cron jobs in your tenant, all of them will be
+deleted during the import process, before they are generated. So, be careful.
 
 
 ## Import [/import]
@@ -152,7 +152,33 @@ Deletes all templates, devices, flows and remote nodes and creates new ones in y
                         "created": 1547033210480,
                         "updated": 1547033210480
                     }
-                ]
+                ],
+
+            "cronJobs": [
+                {
+                    "jobId": "e909e5c5-c0a7-4d91-a60a-5dbfe17fcdad",
+                    "spec":
+                        {
+                            "time": "0/5 * * * *",
+                            "timezone": "America/Sao_Paulo",
+                            "name": "Keep alive",
+                            "description": "This job sends a keep alive notification to a device every 5 minutes",
+                            "broker": {
+                                        "subject": "dojot.device-manager.device",
+                                        "message": {
+                                                    "event": "configure",
+                                                    "data": {
+                                                                "attrs": { "message": "keepalive"},
+                                                                "id": "9bbd77"
+                                                            },
+                                                    "meta": {
+                                                                "service": "admin"
+                                                            }
+                                                }
+                                    }
+                        }
+                }
+            ]
             }
 
 + Response 201 (application/json; charset=utf-8)
@@ -174,7 +200,7 @@ Deletes all templates, devices, flows and remote nodes and creates new ones in y
 ## Export [/export]
 
 ### Get all data to be exported [GET /export]
-Return all current templates, devices, flows and remote nodes in your tenant.
+Return all current templates, devices, flows, remote nodes, and cron jobs in your tenant.
 
 + Request (application/json; charset=utf-8)
   + Headers
@@ -318,7 +344,33 @@ Return all current templates, devices, flows and remote nodes in your tenant.
                         "created": 1547225348029,
                         "updated": 1547225348029
                     }
+                ],
+                "cronJobs": [
+                    {
+                        "jobId": "e909e5c5-c0a7-4d91-a60a-5dbfe17fcdad",
+                        "spec":
+                            {
+                                "time": "0/5 * * * *",
+                                "timezone": "America/Sao_Paulo",
+                                "name": "Keep alive",
+                                "description": "This job sends a keep alive notification to a device every 5 minutes",
+                                "broker": {
+                                            "subject": "dojot.device-manager.device",
+                                            "message": {
+                                                        "event": "configure",
+                                                        "data": {
+                                                                    "attrs": { "message": "keepalive"},
+                                                                    "id": "9bbd77"
+                                                                },
+                                                        "meta": {
+                                                                    "service": "admin"
+                                                                }
+                                                    }
+                                        }
+                            }
+                    }
                 ]
+
             }
 
 + Response 400 (application/json; charset=utf-8)

@@ -13,6 +13,7 @@ install:
 script:
   - export FLOW_BROKER_URL=http://127.0.0.1:3030
   - export DEVICE_MANAGER_URL=http://127.0.0.1:3030
+  - export CRON_URL=http://127.0.0.1:3030/cron
   - bash start-test.sh
 
 after_success:

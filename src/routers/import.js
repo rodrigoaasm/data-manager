@@ -37,6 +37,15 @@ router.post('/import', [
   body('flows.*.flow').exists().isArray(),
   // check object into array
   body('flows.*.flow.*.type').exists().isString(),
+
+  // check cron jobs
+  body('cronJobs', 'Need to be array').optional().isArray(),
+  // check object into array
+  body('cronJobs.*.jobId').exists().isString(),
+  body('cronJobs.*.spec').exists()
+
+
+
 ], (req, res) => {
   const rawToken = req.get('authorization');
   const errors = validationResult(req);

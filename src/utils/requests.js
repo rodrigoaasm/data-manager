@@ -37,6 +37,25 @@ const post = (token, urlRequest, body) => new Promise((resolve, reject) => {
     });
 });
 
+const put = (token, urlRequest, body) => new Promise((resolve, reject) => {
+  logger.debug(`Will call ${urlRequest}`);
+  axios({
+    method: 'put',
+    headers: {
+      authorization: token,
+      'content-type': 'application/json',
+    },
+    url: urlRequest,
+    data: body,
+  })
+    .then((ret) => {
+      resolve(ret);
+    })
+    .catch((err) => {
+      reject(err.toString());
+    });
+});
+
 const _delete = (token, urlRequest) => new Promise((resolve, reject) => {
   logger.debug(`Will call delete ${urlRequest}`);
   axios({
@@ -55,4 +74,4 @@ const _delete = (token, urlRequest) => new Promise((resolve, reject) => {
     });
 });
 
-export default { get, post, _delete };
+export default { get, post, put, _delete };

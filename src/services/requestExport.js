@@ -38,6 +38,7 @@ function clearDeviceRet(devices) {
             if ((deviceMetadata.is_static_overridden)
             && (deviceMetadata.is_static_overridden === true)) {
               overridenAttrs.push(deviceAttr);
+              break;
             }
           }
         }

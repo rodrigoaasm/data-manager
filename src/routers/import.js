@@ -22,15 +22,30 @@ router.post('/import', [
   body('devices.*.label').exists().isString(),
   body('devices.*.templates').exists().isArray(),
   body('devices.*.attrs').exists().isArray(),
+  // check flow remote nodes
+  body('flowRemoteNodes', 'Not exist').exists(),
+  body('flowRemoteNodes', 'Need to be array').isArray(),
+  // check object into array;
+  body('flowRemoteNodes.*.id').exists().isString(),
+  body('flowRemoteNodes.*.image').exists().isString(),
   // check flows
   body('flows', 'Not exist').exists(),
   body('flows', 'Need to be array').isArray(),
-  // check object into array;
+  // check object into array
   body('flows.*.name').exists().isString(),
   body('flows.*.enabled').exists().isBoolean(),
   body('flows.*.flow').exists().isArray(),
-  // check object into array;
+  // check object into array
   body('flows.*.flow.*.type').exists().isString(),
+
+  // check cron jobs
+  body('cronJobs', 'Need to be array').optional().isArray(),
+  // check object into array
+  body('cronJobs.*.jobId').exists().isString(),
+  body('cronJobs.*.spec').exists()
+
+
+
 ], (req, res) => {
   const rawToken = req.get('authorization');
   const errors = validationResult(req);

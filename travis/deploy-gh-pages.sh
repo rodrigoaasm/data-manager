@@ -16,7 +16,7 @@ if [ $TRAVIS_PULL_REQUEST == false ] ; then
     export VERSION="${TRAVIS_BRANCH}"
     fi
 
-    docker run --volume $(pwd):/temp:Z dojot/aglio -i /temp/api.apib -o - > ./apiary_${VERSION}.html
+    docker run --volume $(pwd):/temp:Z dojot/aglio -i /temp/apiary.apib -o - > ./apiary_${VERSION}.html
 
     git add apiary_${VERSION}.html
     git commit -m 'Updating gh-pages' 

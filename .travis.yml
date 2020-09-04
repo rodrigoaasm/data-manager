@@ -1,5 +1,6 @@
 
 language: node_js
+sudo: required
 node_js:
   - "8"
 cache:
@@ -17,16 +18,6 @@ script:
   - bash start-test.sh
 
 after_success:
-  - chmod +x travis/publish.sh
-  - chmod +x travis/deploy-gh-pages.sh
-  - docker build -t ${TRAVIS_REPO_SLUG} -f DockerFile .
+  - docker build -t ${TRAVIS_REPO_SLUG}  .
   - travis/publish.sh
   - travis/deploy-gh-pages.sh
-
-deploy:
-  provider: pages
-  skip_cleanup: true
-  keep_history: true
-  github_token: $GITHUB_TOKEN
-  on:
-    branch: ${TRAVIS_BRANCH}
